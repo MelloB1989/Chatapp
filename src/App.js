@@ -12,6 +12,36 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.setState({
+      isLoaded: false,
+      totalMgs: 0,
+      messages: []
+    });
+    fetch(`https://raw.githubusercontent.com/MelloB1989/Chatapp/production/src/message.json`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            messages: result.messages,
+            totalMgs: result.totalMgs
+          });
+          //console.log(result);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )
+  }
+
+
   render() {
 
     const toggleMode = ()=>{

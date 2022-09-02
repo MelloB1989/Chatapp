@@ -1,0 +1,66 @@
+{
+    "status": "ok",
+    "totalMgs": "10",
+    "messages": [
+        {
+            "id": "1",
+            "name": "kartik",
+            "timeStamp": "00:00",
+            "message": "Hello, Lores imporem, elizabeth mine"
+        },
+        {
+            "id": "2",
+            "name": "unknown",
+            "timeStamp": "00:00",
+            "message": "Ok, I am a bot, this is a example message, this ap is made in react js by MelloB"
+        },
+        {
+            "id": "3",
+            "name": "kartik",
+            "timeStamp": "00:00",
+            "message": "Hello, Lores imporem, elizabeth mine"
+        },
+        {
+            "id": "4",
+            "name": "unknown",
+            "timeStamp": "00:00",
+            "message": "Ok, I am a bot, this is a example message, this ap is made in react js by MelloB"
+        },
+        {
+            "id": "5",
+            "name": "kartik",
+            "timeStamp": "00:00",
+            "message": "Hello, Lores imporem, elizabeth mine"
+        },
+        {
+            "id": "6",
+            "name": "unknown",
+            "timeStamp": "00:00",
+            "message": "Ok, I am a bot, this is a example message, this ap is made in react js by MelloB"
+        },
+        {
+            "id": "7",
+            "name": "kartik",
+            "timeStamp": "00:00",
+            "message": "Hello, Lores imporem, elizabeth mine"
+        },
+        {
+            "id": "8",
+            "name": "unknown",
+            "timeStamp": "00:00",
+            "message": "Ok, I am a bot, this is a example message, this ap is made in react js by MelloB"
+        },
+        {
+            "id": "9",
+            "name": "kartik",
+            "timeStamp": "00:00",
+            "message": "Hello, Lores imporem, elizabeth mine"
+        },
+        {
+            "id": "10",
+            "name": "unknown",
+            "timeStamp": "00:00",
+            "message": "Ok, I am a bot, this is a example message, this ap is made in react js by MelloB"
+        }
+       ]
+}

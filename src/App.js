@@ -27,7 +27,7 @@ class App extends React.Component {
             messages: result.messages,
             totalMgs: result.totalMgs
           });
-          //console.log(result);
+          console.log(result);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -41,8 +41,13 @@ class App extends React.Component {
       )
   }
 
-
   render() {
+
+    const setstatev = (myname)=>{
+      this.setState({
+        name: myname
+      })
+    }
 
     const toggleMode = ()=>{
       //console.log(this.state.mode)
@@ -65,8 +70,8 @@ class App extends React.Component {
                 <div className="card chat-app shadow-lg" style={this.state.mode === 'light' ? {color: 'black', backgroundColor: 'white'} : {color: 'white', backgroundColor: '#212529', border: '1px white'}}>
                   <Plist mode={this.state.mode}/>
                   <div className="chat">
-                    <ChatHeader toggleMode={toggleMode} mode={this.state.mode}/>
-                    <ChatHistory mode={this.state.mode}/>
+                    <ChatHeader toggleMode={toggleMode} mode={this.state.mode} name={this.state.name}/>
+                    <ChatHistory mode={this.state.mode} messages={this.state.messages} isLoaded={this.state.isLoaded} totalMgs={this.state.totalMgs} error={this.state.error} setstatev={setstatev}/>
                   </div>
                 </div>
             </div>

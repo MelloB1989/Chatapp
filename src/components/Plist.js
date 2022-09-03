@@ -27,8 +27,8 @@ export class Plist extends Component {
             </li>
             <li className="clearfix" style={{color: 'black'}}>
                 <div className="about">
-                    <div class="spinner-border spinner-border-sm" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                    <div className="spinner-border spinner-border-sm" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div>
                     <div className="status"> <i className="fa fa-circle online"></i> online </div>
                 </div>

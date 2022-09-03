@@ -10,7 +10,7 @@ export class ChatHeader extends Component {
                                 <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar"/>
                             </a>
                             <div className="chat-about">
-                                <h6 className="m-b-0">Aiden Chavez</h6>
+                                <h6 className="m-b-0">{this.props.name}</h6>
                                 <small>Last seen: 2 hours ago</small>
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
 from flask import Flask, request
-#from flask_cors import CORS
+from flask_cors import CORS
 import time, hashlib, random
 
 # Initialize Firebase 🔥
@@ -13,6 +13,7 @@ db = firestore.client()
 
 # Set Flask App 🥣
 app = Flask(__name__)
+CORS(app, supports_credentials=True)
 #cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Set API_KEY ⛵
@@ -42,11 +43,11 @@ def after_request(response):
     response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
     response.headers.add("Access-Control-Allow-Methods", "POST")
 
-@app.route('/accounts/login', methods=['POST', 'OPTIONS'])
+@app.route('/accounts/login', methods=['GET'])
 def login():
-    username = request.form['username']
-    password = request.form['password']
-    api_key = request.form['api_key']
+    username = request.headers["username"]
+    password = request.headers["password"]
+    api_key = request.headers["Authorization"]
 
     if api_key == API_KEY:
         user_data = getData("users", username)
@@ -56,11 +57,8 @@ def login():
         #Encrypting the token for unique identification
             cookie = "session_"+hashlib.sha256(cookie_str.encode('utf-8')).hexdigest()
             updateData("users", username, "cookie", cookie)
-            response = {'username': username, 'name': user_data['name'], 'cookie': cookie}
+            response = {"username": username, "name": user_data['name'], "cookie": cookie}
             #response = after_request(response)
-            response.headers.add("Access-Control-Allow-Origin", "*")
-            response.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
-            response.headers.add("Access-Control-Allow-Methods", "POST")
             return response
         else:
             return "{'error': 'invalid_api_key_or_password'}"

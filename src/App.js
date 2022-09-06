@@ -1,4 +1,5 @@
 import React from 'react';
+import Cookies from 'universal-cookie';
 import Plist from './components/Plist';
 import ChatHistory from './components/ChatHistory';
 import ChatHeader from './components/ChatHeader';
@@ -21,24 +22,34 @@ class App extends React.Component {
   }
   
   componentDidMount() {
+
+    const cookies = new Cookies();
+
+    this.setState({
+      username: cookies.get('username'),
+      //logged_in: cookies.get('logged_in'),
+      cookie: cookies.get('token')
+    })
+
     if (this.state.logged_in !== false){
+
+      let payload = new FormData();
+      payload.append('username', this.state.username)
+      payload.append('api_key', api.API_KEY)
+      payload.append('context', 'c')
+
     setInterval(()=> { fetch(`${this.state.API_URL}/user/messages`, {
       method: 'POST',
+      mode : "no-cors",
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'http://192.168.1.10:5000',
         'Access-Control-Allow-Methods': 'POST',
         'Access-Control-Allow-Headers': 'Content-Type, Authorization'
       },
-      body: JSON.stringify({
-        username: this.state.username,
-        context: this.state.person,
-        cookie: this.state.cookie,
-        api_key: api.API_KEY
-      }),
+      body: payload,
       cache: 'default'
     })
-      .then(res => res.json())
+      .then(response => response.json())
       .then(
         (result) => {
           this.setState({
@@ -61,7 +72,10 @@ class App extends React.Component {
     }, 2000);
     }
   }
+
   render() {
+
+    const cookies = new Cookies();
 
     const setstatev = (myname)=>{
       this.setState({
@@ -74,33 +88,39 @@ class App extends React.Component {
         username: user,
         password: pswd
       });
-      let payload = {
-          username: this.state.username,
-          password: this.state.password,
-          api_key: api.API_KEY
-      }
-      console.log(user)
+    
       fetch(`${this.state.API_URL}/accounts/login`, {
-        method: 'POST',
         headers: {
           "Content-Type": "application/json",
-          "mode": "no-cors",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "POST",
-          "Access-Control-Allow-Headers": "Content-Type, Authorization"
-        },
-        body: payload
+          'Access-Control-Allow-Methods': 'GET',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          "Authorization": api.API_KEY,
+          "username": user,
+          "password": pswd
+        }
       })
-      .then(res => res.json())
+      .then(response => response.json())
       .then(
         (result) => {
+          if (result.error){
+            this.setState({
+              logged_in: false,
+              error: result.error
+            });
+          showAlert(result.error, "warning")  
+          }
+          else{
           this.setState({
             logged_in: true,
             username: result.username,
             name: result.name,
             cookie: result.cookie
           });
-          console.log(result);
+          
+          cookies.set('username', String(result.username))
+          cookies.set('logged_in', true)
+          cookies.set('token', String(result.cookie))
+        }
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -111,7 +131,7 @@ class App extends React.Component {
             error
           });
         }
-      )
+    )
     }
 
     const showAlert = (message, type)=>{
@@ -143,8 +163,21 @@ class App extends React.Component {
       }
     };
 
-    if (this.state.logged_in){
-      return(
+    const logout = ()=>{
+      cookies.set('username', '')
+      cookies.set('token', '')
+      cookies.set('logged_in', false)
+
+      this.setState({
+        username: '',
+        cookie: '',
+        logged_in: false
+      })
+    }
+
+    return(
+    <>
+    { this.state.logged_in !== false ? (
     <div className="container">
       <Alert showAlert={showAlert}/>
         <div className="row clearfix">
@@ -152,23 +185,22 @@ class App extends React.Component {
                 <div className="card chat-app shadow-lg" style={this.state.mode === 'light' ? {color: 'black', backgroundColor: 'white'} : {color: 'white', backgroundColor: '#212529', border: '1px white'}}>
                   <Plist mode={this.state.mode}/>
                   <div className="chat">
-                    <ChatHeader toggleMode={toggleMode} mode={this.state.mode} name={this.state.name}/>
+                    <ChatHeader toggleMode={toggleMode} logout={logout} mode={this.state.mode} name={this.state.name}/>
                     <ChatHistory mode={this.state.mode} messages={this.state.messages} isLoaded={this.state.isLoaded} totalMgs={this.state.totalMgs} error={this.state.error} setstatev={setstatev}/>
                   </div>
                 </div>
             </div>
           </div>
     </div>
-      )
-    }
-    else {
-      return(
-        <>
+    ) : (
+      <div>
       <Alert showAlert={showAlert} />
       <Login login={login}/>
-      </>
-      )
+      </div>
+    )
     }
+    </>
+      )
   }
 }
 

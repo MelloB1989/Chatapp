@@ -15,11 +15,12 @@ export class ChatHeader extends Component {
                             </div>
                         </div>
                         <div className="col-lg-6 hidden-sm text-right">
-                            <a href="/" className="btn btn-outline-secondary mx-1"><i className="fa fa-camera"></i></a>
+                            {/*<a href="/" className="btn btn-outline-secondary mx-1"><i className="fa fa-camera"></i></a>*/}
                             <a href="/" className="btn btn-outline-primary mx-1"><i className="fa fa-image"></i></a>
                             <a href="/" className="btn btn-outline-info mx-1"><i className="fa fa-cogs"></i></a>
-                            <a href="/" className="btn btn-outline-warning mx-1"><i className="fa fa-question"></i></a>
-                            <button className="btn btn-outline-primary mx-1" onClick={this.props.toggleMode}><img src="https://img.icons8.com/external-dashed-line-kawalan-studio/48/000000/external-dark-mode-user-interface-dashed-line-kawalan-studio.png" alt="dark mode"/></button>
+                            {/*<a href="/" className="btn btn-outline-warning mx-1"><i className="fa fa-question"></i></a>*/}
+                            <button className="btn btn-outline-primary mx-1" onClick={this.props.toggleMode}><img src="https://img.icons8.com/external-dashed-line-kawalan-studio/48/000000/external-dark-mode-user-interface-dashed-line-kawalan-studio.png" height="25px" width="20px" alt="dark mode"/></button>
+                            <button type="button" className="btn btn-outline-danger mx-1 my-1" onClick={this.props.logout}>Logout</button>
                         </div>
                     </div>
         </div>

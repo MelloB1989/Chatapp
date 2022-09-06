@@ -8,6 +8,12 @@
 # testing
 /coverage
 
+# firebase
+/server/private_key.json
+
+# server api
+/src/api.json
+
 # production
 /build
 
